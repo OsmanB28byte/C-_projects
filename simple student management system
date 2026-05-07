@@ -1,0 +1,193 @@
+#include<iostream>
+#include<fstream>
+#include<sstream>
+#include<cstdlib>
+using namespace std;
+
+void studentport(); void welcome(); void filldetails();
+void admin(); void searchByPin();
+
+
+//saving function
+void saving(string name1,string name2,string id,string age, string pin){
+
+ ofstream file1("data.txt",ios::app);
+ file1<<name1<<"-"<<name2<<","<< id<<","<<age<<","<< pin<<endl;
+ file1.close();
+}
+
+//search function
+void searchByPin(string givenpin){
+ifstream file2("data.txt");
+int again;
+if(!file2){
+ cout << "the file is not available" << endl;
+return;
+}
+ string line;
+ bool found=false;
+ while(getline(file2,line)){
+   string name,id, age,pin;
+    stringstream ground(line);
+    
+     getline(ground,name,',');
+     getline(ground,id,',');
+     getline(ground,age,',');
+     getline(ground,pin);
+     
+     if(pin == givenpin){
+      cout << "welcome mr."<< name << endl;
+      cout << "name :"<< name << endl;
+      cout << "id :"<< id << endl;
+      cout << "age :"<< age << endl;
+     found=true;
+     break;
+     }
+     
+     }
+     
+     if(!found){
+   cout << "the pin entered is wrong press 1 to try again  " << endl;
+ }
+ 
+  file2.close();
+  cin >> again;
+  system("clear");
+  
+ }
+ 
+  
+
+void admin(string adminpin){
+int again; string pin="black280";
+if(adminpin==pin){
+cout << "WELCOME TO ADMINISTRATION CENTER" << endl;
+cout << endl;
+ifstream file3("data.txt");
+
+if(!file3){
+
+ cout << "file is not detected" << endl;
+ return;
+}
+ 
+ string line;
+ 
+ cout << "ALL PRESENT  STUDENTS RECORDS" << endl;
+ cout << endl;
+ while(getline(file3,line)){
+  string name,id,age;
+  stringstream space(line);
+  
+   getline(space,name,',');
+   getline(space,id,',');
+   getline(space,age,',');
+   
+   cout << "name:"<< name << ","<< "id:"<< id<<","<< "age:"<< age<<endl;
+  cout << endl;
+ } 
+ cout << "Press 1 to go back" << endl;
+ cin >> again;
+ system("clear");
+ welcome();
+ } 
+ else {
+  cout << "Invalid pin press 1 try again later " << endl;
+  cin >> again;
+  system("clear");
+  welcome();
+  }
+ 
+}
+
+
+
+
+
+ void welcome(){
+ int choice; string password;
+   cout << "WELCOM YO STUDENT RECORD MANAGEMENT SYSTEM" << endl;
+   cout << "are you ? 🤔" << endl;
+   cout <<endl;
+   cout << "1.Adminstrater" << endl;
+   cout << "2.student" << endl;
+   cout << "3.quit" << endl;
+   cout << endl;
+   cout << "fill choice :";cin >> choice;
+   system("clear");
+   if(choice==1){
+   cout << "Enter your password to login" << endl;
+      cin >> password;
+      system("clear");
+      admin(password);
+   }
+      else if(choice==2)
+   {
+      studentport();
+   }
+   else if(choice=3){
+   cout << "Bye bye 🤗 welcome again" << endl;
+    return;
+   }
+}
+
+
+//welcome function
+void studentport(){
+int choice; string name; string pin;
+cout << "WELCOME TO OUR BASICS" << endl;
+cout << "1.find me" << endl;
+cout << "2.register me" << endl;
+cout << "3.exit" << endl;
+cout << "Enter your choice="; cin>> choice;
+
+system("clear");
+
+if(choice==2){
+  filldetails();
+}
+else if(choice==1){
+cout<<"Enter your pin to get details"<<endl;
+cin>> pin;
+system("clear");
+searchByPin(pin);
+}
+else if(choice==3){
+ welcome();
+}
+}
+
+
+//filling details function
+void filldetails(){
+string name1,name2,id,age,pin; int cont;
+cout << "WELCOME TO REGISTRATION" << endl;
+cout  <<endl;
+cout << "Enter your first name :"; cin>> name1;
+cout<<endl;
+cout << "Enter your second name :" ;cin >> name2;
+cout << endl;
+cout << "Enter your ID number :" ;cin>> id;
+cout <<  endl;
+cout << "Enter your age: " ; cin>>age;
+cout << endl;
+cout << "Enter your pin"; cin>> pin;
+saving(name1,name2,id,age,pin);
+cout << "SUCCESSFUL REGISTERED " << endl;
+cout << "press ok 1 to go back" << endl;
+cin>>cont;
+system("clear");
+ studentport();
+}
+
+
+
+
+int main()
+
+int cont; 
+welcome();
+
+return 0;
+}
+    
